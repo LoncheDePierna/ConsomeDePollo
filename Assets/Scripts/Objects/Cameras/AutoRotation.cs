@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class AutoRotation : MonoBehaviour
 {
-    // Variables publicas
-    public float rotationLimit, rotationSpeed;
+    //Variables publicas
+    public float rotationLimit, RotationSpeed;
 
-    //Variables privadas
+    //Variables privadas 
     private float originalYrotation, yRotation;
     private int orientation;
 
-
-    // Start is called before the first frame update
     void Start()
     {
+        //Inicalizacion de variables
         originalYrotation = transform.localEulerAngles.y;
         yRotation = transform.localEulerAngles.y;
+        orientation = 1;
     }
 
     // Update is called once per frame
@@ -24,28 +24,25 @@ public class AutoRotation : MonoBehaviour
     {
         Rotation();
     }
-    // Funcion para rotar
+
+    //Funcion para rotar
     void Rotation()
     {
-        // Si llegamos a alguno de los limited entonces cambiamos la orientacion
+
+        //Si llegamos a alguno de los limites de la rotacion entonces cambiamos la orientacion
         if ((transform.localEulerAngles.y <= originalYrotation - rotationLimit) || (transform.localEulerAngles.y >= originalYrotation + rotationLimit))
         {
             ChangeRotation();
         }
 
-
-        // Rotamos
-        yRotation += rotationSpeed * orientation * Time.deltaTime;
+        //Rotamos
+        yRotation += RotationSpeed * orientation * Time.deltaTime;
         transform.localRotation = Quaternion.Euler(transform.localEulerAngles.x, yRotation, transform.localEulerAngles.z);
-
-
     }
 
-    // Funcion para cambiar la orientacion
+    //Funcion para cambiar la orientacion
     void ChangeRotation()
     {
         orientation *= -1;
     }
-
 }
-
