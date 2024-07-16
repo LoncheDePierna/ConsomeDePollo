@@ -50,9 +50,14 @@ public class Monitor : MonoBehaviour
         buttomAS.Play();
 
         // Si la camara es donde esta la music box, activamos su UI
-        // ----------------------------
-        // ----------------------------
-        // ----------------------------
+        if (currentCamera == 7)
+        {
+            MusicBox.Instance.SetStateUI(true);
+        }
+        else
+        {
+            MusicBox.Instance.SetStateUI(false);
+        }
     }
 
     // Funcion para cambiar el estado del monitor
@@ -72,10 +77,11 @@ public class Monitor : MonoBehaviour
             EnergyManager.Instance.DecreaseConsumptionLevel();
         }
 
-         // Musicbox
-        // ------------------
-        // ------------------
-        // ------------------
+        // Musicbox
+        if (currentCamera == 7)
+        {
+            MusicBox.Instance.SetStateUI(_state);
+        }
     }
 
 }

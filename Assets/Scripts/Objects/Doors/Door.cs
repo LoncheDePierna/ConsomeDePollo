@@ -6,6 +6,7 @@ public class Door : MonoBehaviour
 {
     private bool isOpen;
     private Animator animator;
+    public AudioSource doorAS;
 
 
     // Start is called before the first frame update
@@ -20,11 +21,12 @@ public class Door : MonoBehaviour
     public void SetIsOpen(bool _state) 
     {
         isOpen = _state;
+        doorAS.Play();
         UpdateAnimation();
     }
 
     // Funcion para regresar estado de la puerta
-    public bool IsOpen(bool _state)
+    public bool IsOpen()
     {
         return isOpen;
     }

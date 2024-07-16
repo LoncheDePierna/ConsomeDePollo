@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
     // Variables privadas
     private int time;
 
+
     // Singleton
     public static LevelManager Instance { get; private set; }
 
