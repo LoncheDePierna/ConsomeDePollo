@@ -2,79 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Animatronic : MonoBehaviour
+public class animatronicos : MonoBehaviour
 {
-    // Variable public
+    //variables publicas
     public float timeToMove, probabilityOfMoving;
-    public Transform[] positions;
+    public GameObject[] positions;
     public Door door;
 
     public GameObject jumpscareMesh;
 
-    // Variables privadas
+    //variables privada
     private int positionIndex;
-
-
-
 
     // Start is called before the first frame update
     void Start()
     {
+        //inicalizacion
         positionIndex = 0;
-        StartCoroutine(MovementCoroutine(Random.Range(timeToMove - 5f, timeToMove + 5f)));
+        StartCoroutine(MovementCorrutine(Random.Range(timeToMove - 5f, timeToMove + 5f)));
     }
-
-    void Move()
+  
+    //funcion de movimiento
+    void move()
     {
-        // Calcular la probabilidad para moverse
-        if (Random.Range(0f,100f) <= probabilityOfMoving)
+        //Calcular probabilidad para moverse
+        if (Random.Range(0f, 100f) <= probabilityOfMoving)
         {
-            // Verifiamos si estamos en la puerta
+            //Verificamos si estamos ne la puerta
             if (positionIndex == positions.Length - 1)
             {
-                // Verificamos que la puerta este abierta
+                //verificamos que la puerta este abierta
                 if (door == null || door.IsOpen())
                 {
-                    // Atacamos
+                    //atacamos
                     StopAllCoroutines();
-                    Attack();
+                    attack();
                     return;
                 }
                 else
                 {
-                    // Nos regresamos al inicio
                     positionIndex = 0;
-                    transform.position = positions[positionIndex].position;
-                    transform.rotation = positions[positionIndex].rotation;
+                    positions[positionIndex].SetActive(true);
                 }
             }
-            // Si aun no estamos en la puerta
             else
             {
-                // Nos movemos a la siguiente posicion
+                positions[positionIndex].SetActive(false);
                 positionIndex++;
-                transform.position = positions[positionIndex].position;
-                transform.rotation = positions[positionIndex].rotation;
+                positions[positionIndex].SetActive(true);
             }
         }
-        // Iniciamos la corrutina para el siguiente movimiento
-        StartCoroutine(MovementCoroutine(Random.Range(timeToMove - 5f, timeToMove + 5f)));
+        //inicamos la corrutina para le siguiente movimiento
+        StartCoroutine(MovementCorrutine(Random.Range(timeToMove - 5f, timeToMove + 5f)));
     }
 
-    // Funcion de atacar
-    public void Attack()
+    //corrutina attack
+    public void attack()
     {
         jumpscareMesh.SetActive(true);
         LevelManager.Instance.PlayerDead();
     }
 
-    // Corrutina de movimiento
-    IEnumerator MovementCoroutine(float _time)
+    //corrutina de movimeinto
+    IEnumerator MovementCorrutine(float time)
     {
-        // Esperamos el tiempo para hacer un movimiento
-        yield return new WaitForSeconds(_time);
+        //Esperamos el timepo para hacer un movimiento
+        yield return new WaitForSeconds(time);
 
-        // Intentamos movernos
-        Move();
+        //intentamos movernos
+        move();
     }
 }
